@@ -1,5 +1,5 @@
 # FFmpeg-Batch-Convert
-A program to batch convert video and audio files using FFmpeg.
+An FFMpeg bash script to batch convert video and audio files
 
 What it does:
 Searches for video files by extension (recursively, checks for streams to convert, if present it converts the files, appends the filename with "FFmpeg-Batch-Convert", then moves the old files to a directory named "CLEANUP".

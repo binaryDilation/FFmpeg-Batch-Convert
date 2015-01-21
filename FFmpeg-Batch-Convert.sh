@@ -673,6 +673,9 @@
 # Public License instead of this License.  But first, please read
 # <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 #
+# //Notes//
+# Note1:  To enable a log of standard output add tee: VideoConverionBatchScript.sh | tee -a VideoConverionBatchScript.log
+# Note2:  If using a media server like Plex, run this script from outside where Plex scans for media (one directory below is a good choice), otherwise Plex may detect the old files the Plex library may be duplicated.
 # //Beginning of Script//
 # If Statement:  Check if ffmpeg is running, quits if true. See Issue#3.  This is a slightly flawed approach since it does't consider actual script
 if pidof -x "ffmpeg" >/dev/null; then
@@ -683,13 +686,13 @@ if pidof -x "ffmpeg" >/dev/null; then
   cd ~
   # ChangeDirectory to where files for conversion are located
   cd ../foo/foo/
-  # Whitespace FOR loop fixer
+  # Module 2: Whitespace FOR loop fixer
   SAVEIFS=$IFS
   IFS=$(echo -en "\n\b")
   #
-  # Non-Recursive Version: Finds files with the extensions below, sorts them into lines, issues 'do' command
+  # Module 3a: Non-Recursive Version: Finds files with the extensions below, sorts them into lines, issues 'do' command
   # for FIL in `ls *.mp4 *.mkv *.avi *.mpg | sort` ; do
-  # Recursive Version: Finds files with the common extensions below, issues 'do' command
+  # Module 3b: Recursive Version: Finds files with the common extensions below, issues 'do' command
   for FIL in `find $directory -type f \( -iname \*.mp4 -o -iname \*.mkv -o -iname \*.avi -o -iname \*.mpg \)` ; do
   # FFProbe checks the files for H264/AAC streams
   output=$(ffprobe -v error -show_streams "$FIL" | grep codec_name)

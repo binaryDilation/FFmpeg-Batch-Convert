@@ -699,7 +699,7 @@ if pidof -x "ffmpeg" >/dev/null; then
         elif [[ $output == *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
                         echo -en '\E[0;32m'"\033[1m**Script Message**:  Found H264 video stream, no AAC audio stream in FILE: "$FIL"  Encoding AAC audio, passing-thru H264 video\033[0m"
                         # pass-thru h264, encode AAC 2-channel constant bit rate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
-                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec copy -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.thunder.mp4
+                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec copy -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Batch-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates a directory named "CLEANUP" ONE DIRECTORY below search directory to ensure files moved to CLEANUP directory aren't searched by script
                         if [ ! -d ../CLEANUP ]; then
                                 echo -en '\E[0;32m'"\033[1m**Script Message**:  Creating CLEANUP directory one folder below where script was run from\033[0m"
@@ -711,7 +711,7 @@ if pidof -x "ffmpeg" >/dev/null; then
         elif [[ $output != *codec_name=h264* ]] && [[ $output == *codec_name=aac* ]]; then
                         echo -en '\E[0;32m'"\033[1m**Script Message**:  Found AAC audio stream, no H264 video stream in FILE: "$FIL"  Encoding H264 video, passing-thru AAC audio\033[0m"
                         # pass-thru AAC, encode h264 constant quality rate of 20, overwrite files, 10 second probe
-                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec copy ${FIL%.*}.thunder.mp4
+                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec copy ${FIL%.*}.FFmpeg-Batch-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates it
                         if [ ! -d ../CLEANUP ]; then
                                 echo -en '\E[0;32m'"\033[1m**Script Message**:  Creating CLEANUP directory one folder below where script was run from\033[0m"
@@ -723,7 +723,7 @@ if pidof -x "ffmpeg" >/dev/null; then
         elif [[ $output != *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
                         echo -en '\E[0;32m'"\033[1m**Script Message**:  H264/AAC stream not found in FILE: "$FIL", transcoding video as H264 and audio as AAC\033[0m"
                         # encode h264, AAC 2-channel at constant bitrate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
-                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.thunder.mp4
+                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Batch-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates it
                         if [ ! -d ../CLEANUP ]; then
                                 echo -en '\E[0;32m'"\033[1m**Script Message**:  Creating CLEANUP directory one folder below where script was run from\033[0m"

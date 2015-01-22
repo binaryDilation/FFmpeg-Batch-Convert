@@ -677,6 +677,12 @@
 # Note1:  To enable a log of standard output add tee: VideoConverionBatchScript.sh | tee -a VideoConverionBatchScript.log
 # Note2:  If using a media server like Plex, run this script from outside where Plex scans for media (one directory below is a good choice), otherwise Plex may detect the old files the Plex library may be duplicated.
 # //Beginning of Script//
+# Define Global Color Variables
+red='\033[0;31m'
+green='\033[0;32m'
+cyan='\033[0;36m'
+# Global bold variable, uses tput since it's the most compatible, works with non-VT100 terminals (looks up approriate codes according to TERM)
+bold=`tput bold`
 # If Statement:  Check if ffmpeg is running, quits if true. See Issue#3.  This is a slightly flawed approach since it does't consider actual script
 if pidof -x "ffmpeg" >/dev/null; then
   echo "ffmpeg is already running"
@@ -698,43 +704,42 @@ if pidof -x "ffmpeg" >/dev/null; then
   output=$(ffprobe -v error -show_streams "$FIL" | grep codec_name)
   # If/ElseIf Statements: act as decision logic for correct encoding
   if [[ $output == *codec_name=h264* ]] && [[ $output == *codec_name=aac* ]]; then
-        echo -en '\E[0;32m'"\033[1m**Script Message**:  H264 and AAC streams found in FILE: "$FIL", skipping transcode\033[0m"
+        echo -e "${green}${bold}Script: H264 and AAC streams found, skipping transcode for FILE: "$FIL""
         elif [[ $output == *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
-                        echo -en '\E[0;31m'"\033[1m**Script Message**:  Found H264 video stream, no AAC audio stream in FILE: "$FIL"  Encoding AAC audio, passing-thru H264 video\033[0m"
+                        echo -e "${red}${bold}Script:   Found H264 video stream, no AAC audio stream. Encoding AAC audio, passing-thru H264 video for FILE: "$FIL""
                         # pass-thru h264, encode AAC 2-channel constant bit rate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
                         nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec copy -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Batch-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates a directory named "CLEANUP" ONE DIRECTORY below search directory to ensure files moved to CLEANUP directory aren't searched by script
                         if [ ! -d ../CLEANUP ]; then
-                                echo -en '\E[0;31m'"\033[1m**Script Message**:  Creating CLEANUP directory one folder below where script was run from\033[0m"
+                                echo -e "${red}${bold}Script:   Creating CLEANUP directory one folder below where script was run from"
                                 mkdir -p ../CLEANUP
                         fi
                         # moves original file to CLEANUP folder
                         mv "$FIL" ../CLEANUP/
-                        echo -en '\E[0;31m'"\033[1m**Script Message**:  Moved orginal FILE: "$FIL" to CLEANUP directory\033[0m"
+                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
         elif [[ $output != *codec_name=h264* ]] && [[ $output == *codec_name=aac* ]]; then
-                        echo -en '\E[0;31m'"\033[1m**Script Message**:  Found AAC audio stream, no H264 video stream in FILE: "$FIL"  Encoding H264 video, passing-thru AAC audio\033[0m"
+                        echo -e "${red}${bold}Script:   Found AAC audio stream, no H264 video stream.   Encoding H264 video, passing-thru AAC audio for FILE: "$FIL""
                         # pass-thru AAC, encode h264 constant quality rate of 20, overwrite files, 10 second probe
                         nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec copy ${FIL%.*}.FFmpeg-Batch-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates it
                         if [ ! -d ../CLEANUP ]; then
-                                echo -en '\E[0;31m'"\033[1m**Script Message**:  Creating CLEANUP directory one folder below where script was run from\033[0m"
+                                echo -e "${red}${bold}Script:   Creating CLEANUP directory one folder below where script was run from"
                                 mkdir -p ../CLEANUP
                         fi
                         # moves original file to CLEANUP folder
                         mv "$FIL" ../CLEANUP/
-                        echo -en '\E[0;31m'"\033[1m**Script Message**:  Moved orginal FILE: "$FIL" to CLEANUP directory\033[0m"
+                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
         elif [[ $output != *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
-                        echo -en '\E[0;31m'"\033[1m**Script Message**:  H264/AAC stream not found in FILE: "$FIL", transcoding video as H264 and audio as AAC\033[0m"
+                        echo -e "${red}${bold}Script:   H264/AAC stream not found. Transcoding video as H264 and audio as AAC for FILE: "$FIL""
                         # encode h264, AAC 2-channel at constant bitrate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
                         nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Batch-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates it
                         if [ ! -d ../CLEANUP ]; then
-                                echo -en '\E[0;31m'"\033[1m**Script Message**:  Creating CLEANUP directory one folder below where script was run from\033[0m"
+                                echo -e "${red}${bold}Script:   Creating CLEANUP directory one folder below where script was run from"
                                 mkdir -p ../CLEANUP
                         fi
                         # moves original file to CLEANUP folder
-                        mv "$FIL" ../CLEANUP/
-                        echo -en '\E[0;31m'"\033[1m**Script Message**:  Moved orginal FILE: "$FIL" to CLEANUP directory\033[0m"
+                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
   fi
   done
 fi

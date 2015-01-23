@@ -743,3 +743,4 @@ bold=`tput bold`
   fi
   done
 fi
+echo -e "${red}${bold}************End of Script************"

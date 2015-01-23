@@ -679,16 +679,20 @@
 # Note1:  To enable a log of standard output add tee: VideoConverionBatchScript.sh | tee -a VideoConverionBatchScript.log
 # Note2:  If using a media server like Plex, run this script from outside where Plex scans for media (one directory below is a good choice), otherwise Plex may detect the old files the Plex library may be duplicated.
 # //Beginning of Script//
-# Module 1: If Statement:  Check if ffmpeg is running, quits if true. See Issue#3.  This is a slightly flawed approach since it does't consider actual script
-if pidof -x "ffmpeg" >/dev/null; then
-  echo "ffmpeg is already running"
-  else
 # Define Global Color Variables
 red='\033[0;31m'
 green='\033[0;32m'
 cyan='\033[0;36m'
 # Global Bold Variable, uses tput since it's the most compatible, works with non-VT100 terminals (looks up appropriate codes according to TERM)
 bold=`tput bold`
+# Prints today's date, useful to break up logs
+echo -e "${cyan}${bold}-----------------------------------------------------"
+echo -e "${cyan}${bold}Script Run: $(date)"
+echo -e "${cyan}${bold}-----------------------------------------------------"
+# Module 1: If Statement:  Check if ffmpeg is running, quits if true. See Issue#3.  This is a slightly flawed approach since it does't consider actual script
+if pidof -x "ffmpeg" >/dev/null; then
+  echo "ffmpeg is already running"
+  else
   # Module 2:  Set Search Directory where files for conversion are located
   # ChangeDirectory into home directory
   cd ~

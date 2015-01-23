@@ -48,7 +48,9 @@ Note:  All line numbers are of the Commit when this was written.
 8.  When the script has finished, it outputs a End of Script message.  This is useful when logging is enabled to tell if the script completed.
 
 LOGGING:  adding a tee command to the script from the CLI or a cronjob is the easiest way to enable basic logging of terminal output (StdOut):
+
 FFmpeg-Batch-Convert.sh | tee -a ~/FFmpeg-Batch-Convert.log
+
 This will create a log file in the user's home directory, -a appends the file if it exists. To view this log use:
 
 cat ~/FFmpeg-Batch-Convert.log

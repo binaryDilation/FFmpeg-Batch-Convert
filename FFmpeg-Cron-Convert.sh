@@ -673,6 +673,8 @@
 # Public License instead of this License.  But first, please read
 # <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 #
+#
+#
 # //Notes//
 # Note1:  To enable a log of standard output add tee: VideoConverionBatchScript.sh | tee -a VideoConverionBatchScript.log
 # Note2:  If using a media server like Plex, run this script from outside where Plex scans for media (one directory below is a good choice), otherwise Plex may detect the old files the Plex library may be duplicated.
@@ -703,8 +705,10 @@ bold=`tput bold`
   # FFProbe checks the files for H264/AAC streams
   output=$(ffprobe -v error -show_streams "$FIL" | grep codec_name)
   # If/ElseIf Statements: act as decision logic for correct encoding
+  # If a stream is h264 and another is AAC
   if [[ $output == *codec_name=h264* ]] && [[ $output == *codec_name=aac* ]]; then
         echo -e "${green}${bold}Script: H264 and AAC streams found, skipping transcode for FILE: "$FIL""
+        # ElseIf a stream is h264 and no stream is AAC
         elif [[ $output == *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   Found H264 video stream, no AAC audio stream. Encoding AAC audio, passing-thru H264 video for FILE: "$FIL""
                         # pass-thru h264, encode AAC 2-channel constant bit rate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
@@ -717,6 +721,7 @@ bold=`tput bold`
                         # moves original file to CLEANUP folder
                         mv "$FIL" ~/CLEANUP/
                         echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
+        #ElseIf a stream is NOT h264 and a stream is AAC
         elif [[ $output != *codec_name=h264* ]] && [[ $output == *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   Found AAC audio stream, no H264 video stream.   Encoding H264 video, passing-thru AAC audio for FILE: "$FIL""
                         # pass-thru AAC, encode h264 constant quality rate of 20, overwrite files, 10 second probe
@@ -729,6 +734,7 @@ bold=`tput bold`
                         # moves original file to CLEANUP folder
                         mv "$FIL" ~/CLEANUP/
                         echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
+        #ElseIf one stream is not h264 and another stream is not AAC
         elif [[ $output != *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   H264/AAC stream not found. Transcoding video as H264 and audio as AAC for FILE: "$FIL""
                         # encode h264, AAC 2-channel at constant bitrate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
@@ -739,6 +745,7 @@ bold=`tput bold`
                                 mkdir -p ~/CLEANUP
                         fi
                         # moves original file to CLEANUP folder
+                        mv "$FIL" ~/CLEANUP/
                         echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
   fi
   done

@@ -2,12 +2,12 @@
 An FFMpeg bash script to batch convert video and audio files.
 
 What it does:
-Searches a directory/sub-directories for video files by file extension, checks the file for  audio & video streams (by codec) to convert, converts the streams to the desired codec as necessary, outputs into the desired container, appends the filename with "FFmpeg-Batch-Convert", then moves the old files to a directory named `CLEANUP`.
+Searches a directory/sub-directories for video files by file extension, checks the file for  audio & video streams (by codec) to convert, converts the streams to the desired codec as necessary, outputs into the desired container, appends the filename with `FFmpeg-Batch-Convert`, then moves the old files to a directory named `CLEANUP`.
 
 How to use it:
 Note:  All line numbers are of the Commit when this was written.
 
-1. Specify the directory to search for video files in Module 2, this is roughly Line 694.
+1. Specify the directory to search for video files in Module 2, this is roughly `Line 694`.
 
 2. Non-Recursive or recursive search?  The default is recursive search.  To switch to non-recursive uncomment Module 4a and comment-out Module 4b.
 

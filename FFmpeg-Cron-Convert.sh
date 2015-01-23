@@ -687,6 +687,7 @@ cyan='\033[0;36m'
 # Global Bold Variable, uses tput since it's the most compatible, works with non-VT100 terminals (looks up appropriate codes according to TERM)
 bold=`tput bold`
 # Splash
+echo ${cyan}
 echo  ' ___  ___        __   ___  __      __       ___  __           __   __             ___  __  ___  ___  __ '
 echo  '|__  |__   |\/| |__) |__  / _` __ |__)  /\   |  /  ` |__| __ /  ` /  \ |\ | \  / |__  |__)  |  |__  |__)'
 echo  '|    |     |  | |    |___ \__>    |__) /~~\  |  \__, |  |    \__, \__/ | \|  \/  |___ |  \  |  |___ |  \'

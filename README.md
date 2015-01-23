@@ -49,11 +49,11 @@ Note:  All line numbers are of the Commit when this was written.
 
 LOGGING:  adding a tee command to the script from the CLI or a cronjob is the easiest way to enable basic logging of terminal output (StdOut):
 
-FFmpeg-Batch-Convert.sh | tee -a ~/FFmpeg-Batch-Convert.log
+`FFmpeg-Batch-Convert.sh | tee -a ~/FFmpeg-Batch-Convert.log`
 
 This will create a log file in the user's home directory, -a appends the file if it exists. To view this log use:
 
-cat ~/FFmpeg-Batch-Convert.log
+`cat ~/FFmpeg-Batch-Convert.log`
 
 Avoid using nano or less commands to view the log file since the output will be messy due to the color coding commands.
 

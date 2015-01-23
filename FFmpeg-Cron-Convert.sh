@@ -673,6 +673,8 @@
 # Public License instead of this License.  But first, please read
 # <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 #
+#
+#
 # //Notes//
 # Note1:  To enable a log of standard output add tee: VideoConverionBatchScript.sh | tee -a VideoConverionBatchScript.log
 # Note2:  If using a media server like Plex, run this script from outside where Plex scans for media (one directory below is a good choice), otherwise Plex may detect the old files the Plex library may be duplicated.

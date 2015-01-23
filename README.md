@@ -14,7 +14,7 @@ Note:  All line numbers are of the Commit when this was written.
 3. By default, the script searches for the following file extensions for conversion: ".mp4", ".mkv", ".avi", ".mpg".  To add more file extensions add the extension inside of the parentheses at `Line 702`, e.g.: `-o -iname \*.webm `.
 
 4. By default, the script searches for H264 video and AAC audio streams.  If both streams are found in a file, the script does no conversion and moves on to check the next file.  If only one or none of those streams is found, the script converts to H264/AAC as necessary, passing through the correct stream, when available, into an .mp4 container.  For example, if a file is .mkv container/H264/mp3, the script will pass-through the H264 video stream, convert the mp3 audio stream to an AAC stream, and place both video & audio streams inside an .mp4 container.  The combination of .mp4/H264/AAC has the broadest support across platforms.  H264/AAC in the .mp4 container works on Android/GTV/Chrome/IE(Desktop/Mobile)/Safari, mostly in Firefox (w/ dependencies from the Operating System), but does NOT work in Chromium or Opera.  For more compatibility look here: https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats
-5. To search for a different stream besides H264 or AAC, replace that stream in the script with desired codec using the proper name FFMpeg uses.  These are the `if &&` comparisons at `Lines 706, 708, 720, and 732`.  From the CLI:  `ffmpeg -codecs` is a good start to find out the correct names for codecs or consult the FFMpeg documentation.  If a new output codec is desired (which it almost always would be if the search codec is changed), edit the FFmpeg commands described directly below in
+5. To search for a different stream besides H264 or AAC, replace that stream in the script with desired codec using the proper name FFMpeg uses.  These are the `if &&` comparisons at `Line 706, 708, 720, and 732`.  From the CLI:  `ffmpeg -codecs` is a good start to find out the correct names for codecs or consult the FFMpeg documentation.  If a new output codec is desired (which it almost always would be if the search codec is changed), edit the default FFmpeg commands described directly below.
 6.  The default FFMpeg options in order are;
 
 `nice -19`        sets the processing priority to lowest possible.
@@ -45,7 +45,7 @@ Note:  All line numbers are of the Commit when this was written.
 
 `${FIL%.*}.FFmpeg-Batch-Convert.mp4`        This sets the output container to .mp4.  To set it to a new container type, simply type the extension e.g. `.mkv`.  Note:  make sure the video/audio streams are compatible with the container.  See FFmpeg documentation.  Secondarily, this sets the output file name to the existing name appended by `FFmpeg-Batch-Convert` to make it easy to identify files that have been converted.
 
-7.  Next, the script moves the files to the `CLEANUP` directory, named by default aptly `CLEANUP` and located one directory above the search directory.  If the `CLEANUP` directory doesn't exist, it's created.  It is important to ensure this directory is NOT within the path of the search since subsequent runs of the script convert those files again.  Note:  Ensure proper permissions are available to create the directory, when in doubt set it to the users home e.g. `~/CLEANUP` on Lines 715, 727, and 739.
+7.  Next, the script moves the files to the `CLEANUP` directory, named by default aptly `CLEANUP` and located one directory above the search directory.  If the `CLEANUP` directory doesn't exist, it's created.  It is important to ensure this directory is NOT within the path of the search since subsequent runs of the script convert those files again.  Note:  Ensure proper permissions are available to create the directory, when in doubt set it to the users home e.g. `~/CLEANUP` on `Line 715, 727, and 739`.
 8.  When the script has finished, it outputs a End of Script message.  This is useful when logging is enabled to tell if the script completed.
 
 LOGGING:  adding a `tee` command to the script from the CLI or a cronjob is the easiest way to enable basic logging of terminal output (StdOut):
@@ -56,6 +56,6 @@ This will create a log file in the user's home directory, -a appends the file if
 
 `cat ~/FFmpeg-Batch-Convert.log`
 
-Avoid using nano or less commands to view the log file since the output will be messy due to the color coding commands.
+Avoid using `nano` or `less` to view the log file since the output will be messy due to the color coding commands.
 
 As of right now, `-report` added to the FFMpeg string will produce a log file for each FFmpeg file conversion (rather messy).  Enhanced logging functionality is being worked on (Issue #3).

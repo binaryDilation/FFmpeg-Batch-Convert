@@ -684,7 +684,10 @@ green='\033[0;32m'
 cyan='\033[0;36m'
 # Global Bold Variable, uses tput since it's the most compatible, works with non-VT100 terminals (looks up appropriate codes according to TERM)
 bold=`tput bold`
-  # Module 2:  Set Search Directory where files for conversion are located
+# Module 1:  Set Search Directory where files for conversion are located
+read -p "Enter your search directory : " name
+echo "This is what you entered: $name !"
+##
   # ChangeDirectory into home directory
   cd ~
   # ChangeDirectory to where files for conversion are located

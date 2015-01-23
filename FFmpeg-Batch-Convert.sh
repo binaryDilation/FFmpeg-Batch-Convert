@@ -685,16 +685,16 @@ cyan='\033[0;36m'
 # Global Bold Variable, uses tput since it's the most compatible, works with non-VT100 terminals (looks up appropriate codes according to TERM)
 bold=`tput bold`
 # Module 1:  Set Search Directory where files for conversion are located
-read -p "Enter your search directory : " name
-echo "This is what you entered: $name !"
-##
-  # ChangeDirectory into home directory
-  cd ~
-  # ChangeDirectory to where files for conversion are located
-  cd ../foo/foo/
-  # Module 3: Whitespace FOR loop fixer
-  SAVEIFS=$IFS
-  IFS=$(echo -en "\n\b")
+read -p "Enter your search directory : " searchDirectory
+echo "This is your search directory $searchDirectory !"
+#
+# ChangeDirectory into home directory
+cd ~
+# ChangeDirectory to where files for conversion are located
+cd $searchDirectory
+# Module 2: Whitespace FOR loop fixer
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
   #
   # Module 4a: Non-Recursive Search: Finds files with the extensions below, sorts them into lines, issues 'do' command
   # for FIL in `ls *.mp4 *.mkv *.avi *.mpg | sort` ; do
@@ -743,3 +743,4 @@ echo "This is what you entered: $name !"
   fi
   done
 echo -e "${red}${bold}************End of Script************"
+

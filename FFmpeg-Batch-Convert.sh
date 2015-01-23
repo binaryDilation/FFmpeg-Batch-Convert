@@ -677,7 +677,8 @@
 #
 # //Notes//
 # Note1:  To enable a log of standard output add tee: VideoConverionBatchScript.sh | tee -a VideoConverionBatchScript.log
-# Note2:  If using a media server like Plex, run this script from outside where Plex scans for media (one directory below is a good choice), otherwise Plex may detect the old files the Plex library may be duplicated.
+# Note2:  If using a media server like Plex, run this script from outside where Plex scans for media (one directory below is a good choice), otherwise Plex may detect the old files the Plex
+ library may be duplicated.
 # //Beginning of Script//
 # Define Global Color Variables
 red='\033[0;31m'
@@ -686,18 +687,24 @@ cyan='\033[0;36m'
 # Global Bold Variable, uses tput since it's the most compatible, works with non-VT100 terminals (looks up appropriate codes according to TERM)
 bold=`tput bold`
 # Module 1:  Set Search Directory where files for conversion are located
-read -p "Enter your search directory : " searchDirectory
-echo "This is your search directory $searchDirectory !"
+read -p "Enter your search directory : " directoryInput
 #
 # ChangeDirectory into home directory
 cd ~
 # ChangeDirectory to where files for conversion are located
-cd $searchDirectory
+cd $directoryInput
 # Module 2: Whitespace FOR loop fixer
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
-  #
-  # Module 4a: Non-Recursive Search: Finds files with the extensions below, sorts them into lines, issues 'do' command
+# Module 3:  Choose recursive search or not
+read -p "Do you want recursive search (sub-directories included)?  Type y/n: " recursiveInput
+while [ "$recursiveInput" != y ] && [ "$recursiveInput" != n ]; do
+read -p "Try again:  Enter "y" or "n" only, do you want recursive search (sub-directories included)?  Type y/n: " recursiveInput
+done
+if [[ $recursiveInput == y ]]; then
+echo "you've chosen recursive directory search"
+fi
+# Module 4a: Non-Recursive Search: Finds files with the extensions below, sorts them into lines, issues 'do' command
   # for FIL in `ls *.mp4 *.mkv *.avi *.mpg | sort` ; do
   # Module 4b: Recursive Search: Finds files with the common extensions below, issues 'do' command
   for FIL in `find $directory -type f \( -iname \*.mp4 -o -iname \*.mkv -o -iname \*.avi -o -iname \*.mpg \)` ; do

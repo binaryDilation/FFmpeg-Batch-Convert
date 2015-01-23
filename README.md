@@ -22,9 +22,9 @@ Note:  All line numbers are of the Commit when this was written.
 
 "-y"              overwrites output files.
 
-"-probesize 100000000"        sets probing size in bytes, i.e. the size of the data to analyze to get stream information. A higher value will allow to detect more information and reduce errors.
+"-probesize 100000000"        sets probing size in bytes, i.e. the size of the data to analyze to get stream information. A higher value will allow to detect more information and reduce errors.  This is twice the default.
 
-"-analyzeduration 100000000"        specifies how many microseconds are analyzed to probe the input. A higher value will allow to detect more accurate information and reduce errors.
+"-analyzeduration 100000000"        specifies how many microseconds are analyzed to probe the input. A higher value will allow to detect more accurate information and reduce errors.  This is twice the default.
 
 "-i "$FIL""        specifies the input file by calling the variable for current file.
 

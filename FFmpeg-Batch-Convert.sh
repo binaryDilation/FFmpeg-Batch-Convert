@@ -716,7 +716,7 @@ bold=`tput bold`
                         fi
                         # moves original file to CLEANUP folder
                         mv "$FIL" ../CLEANUP/
-                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
+                        echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
         elif [[ $output != *codec_name=h264* ]] && [[ $output == *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   Found AAC audio stream, no H264 video stream.   Encoding H264 video, passing-thru AAC audio for FILE: "$FIL""
                         # pass-thru AAC, encode h264 constant quality rate of 20, overwrite files, 10 second probe
@@ -728,7 +728,7 @@ bold=`tput bold`
                         fi
                         # moves original file to CLEANUP folder
                         mv "$FIL" ../CLEANUP/
-                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
+                        echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
         elif [[ $output != *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   H264/AAC stream not found. Transcoding video as H264 and audio as AAC for FILE: "$FIL""
                         # encode h264, AAC 2-channel at constant bitrate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
@@ -739,7 +739,7 @@ bold=`tput bold`
                                 mkdir -p ../CLEANUP
                         fi
                         # moves original file to CLEANUP folder
-                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
+                        echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
   fi
   done
 fi

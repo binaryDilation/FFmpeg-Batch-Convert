@@ -708,7 +708,7 @@ bold=`tput bold`
         elif [[ $output == *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   Found H264 video stream, no AAC audio stream. Encoding AAC audio, passing-thru H264 video for FILE: "$FIL""
                         # pass-thru h264, encode AAC 2-channel constant bit rate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
-                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec copy -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Batch-Convert.mp4
+                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec copy -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Cron-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates a directory named "CLEANUP" ONE DIRECTORY below search directory to ensure files moved to CLEANUP directory aren't searched by script
                         if [ ! -d ../CLEANUP ]; then
                                 echo -e "${red}${bold}Script:   Creating CLEANUP directory one folder below where script was run from"
@@ -716,11 +716,11 @@ bold=`tput bold`
                         fi
                         # moves original file to CLEANUP folder
                         mv "$FIL" ../CLEANUP/
-                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
+                        echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
         elif [[ $output != *codec_name=h264* ]] && [[ $output == *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   Found AAC audio stream, no H264 video stream.   Encoding H264 video, passing-thru AAC audio for FILE: "$FIL""
                         # pass-thru AAC, encode h264 constant quality rate of 20, overwrite files, 10 second probe
-                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec copy ${FIL%.*}.FFmpeg-Batch-Convert.mp4
+                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec copy ${FIL%.*}.FFmpeg-Cron-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates it
                         if [ ! -d ../CLEANUP ]; then
                                 echo -e "${red}${bold}Script:   Creating CLEANUP directory one folder below where script was run from"
@@ -728,18 +728,18 @@ bold=`tput bold`
                         fi
                         # moves original file to CLEANUP folder
                         mv "$FIL" ../CLEANUP/
-                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
+                        echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
         elif [[ $output != *codec_name=h264* ]] && [[ $output != *codec_name=aac* ]]; then
                         echo -e "${red}${bold}Script:   H264/AAC stream not found. Transcoding video as H264 and audio as AAC for FILE: "$FIL""
                         # encode h264, AAC 2-channel at constant bitrate 128k low-pass cutoff 18000KHz, overwrite files, 10 second probe
-                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Batch-Convert.mp4
+                        nice -19 ffmpeg -y -probesize 100000000 -analyzeduration 100000000 -i "$FIL" -vcodec libx264 -crf 20 -preset veryslow -acodec libfdk_aac -ac 2 -b:a 128k -cutoff 18000 ${FIL%.*}.FFmpeg-Cron-Convert.mp4
                         # check if the CLEANUP directory exists, if not creates it
                         if [ ! -d ../CLEANUP ]; then
                                 echo -e "${red}${bold}Script:   Creating CLEANUP directory one folder below where script was run from"
                                 mkdir -p ../CLEANUP
                         fi
                         # moves original file to CLEANUP folder
-                        echo -e "${red}${bold}Script:   Moved orginal FILE to CLEANUP directory: "$FIL""
+                        echo -e "${red}${bold}Script:   Moved original FILE to CLEANUP directory: "$FIL""
   fi
   done
 fi

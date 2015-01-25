@@ -692,10 +692,10 @@ bold=`tput bold`
 # Splash
 echo
 echo
-echo -e "${brown}${bold}Welcome to FFmpeg-Batch-Converter"
-echo  ' ___  ___        __   ___  __      __       ___  __           __   __             ___  __  ___  ___  __ '
-echo  '|__  |__   |\/| |__) |__  / _` __ |__)  /\   |  /  ` |__| __ /  ` /  \ |\ | \  / |__  |__)  |  |__  |__)'
-echo  '|    |     |  | |    |___ \__>    |__) /~~\  |  \__, |  |    \__, \__/ | \|  \/  |___ |  \  |  |___ |  \'
+echo -e "${brown}${bold}Welcome to FFmpeg-Batch-Convert"
+echo  ' ___  ___        __   ___  __      __       ___  __           __   __             ___  __  ___ '
+echo  '|__  |__   |\/| |__) |__  / _` __ |__)  /\   |  /  ` |__| __ /  ` /  \ |\ | \  / |__  |__)  |  '
+echo  '|    |     |  | |    |___ \__>    |__) /~~\  |  \__, |  |    \__, \__/ | \|  \/  |___ |  \  |  '
 echo
 # Module 1:  Set Search Directory where files for conversion are located
 read -p "Enter the directory you'd like to search, e.g., ~/media : " directoryInput
